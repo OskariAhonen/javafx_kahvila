@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+import java.util.List;
 public class Main extends Application {
     Scene login, omistus, asiakas;
     public static void main(String [] args) {
@@ -22,6 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Kahvila kahvila = new Kahvila();
         stage.setTitle("kirjautuminen");
         GridPane grid = new GridPane();
         grid.setHgap(8);
@@ -47,7 +48,8 @@ public class Main extends Application {
         GridPane.setConstraints(virhe, 2,0);
         button.setOnAction(e -> {
             if (nimiInput.getText().equals("Moi") && salaInput.getText().equals("Taitaa")){
-               stage.setScene(omistus);
+                stage.setScene(omistus);
+
 
             }
             else if (nimiInput.getText().equals("Asiakas") && salaInput.getText().equals("kahvi")) {
@@ -60,31 +62,76 @@ public class Main extends Application {
         grid.setAlignment(Pos.CENTER);
         grid.getChildren().addAll(nimiLabel, nimiInput, salaLabel, salaInput, button, virhe);
         login = new Scene(grid, 350, 350);
-        Label text = new Label("Olet sisällä omistajana");
-        Button close = new Button("Kirjaudu ulos");
-        close.setOnAction(e -> {
-                    stage.setScene(login);
-                    nimiInput.clear();
-                    salaInput.clear();
-                    virhe.setText("");
-                });
-            Button close2 = new Button("sulje");
-            close2.setOnAction(e -> {
-                stage.setScene(login);
-                nimiInput.clear();
-                salaInput.clear();
-                virhe.setText("");
+        // omistja
+        GridPane omistajaGrid = new GridPane();
+        omistajaGrid.setPadding(new Insets(10,10,10,10));
+        omistajaGrid.setHgap(10);
+        omistajaGrid.setVgap(8);
+        int i = 0;
+        for (Tuote a : kahvila.getTuote()) {
+            ;
+                //tuotteen nimi ja hinta
+
+                Label nimi = new Label();
+                nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
+                GridPane.setConstraints(nimi, 0,i);
+
+                Button Poista = new Button("Poista");
+                GridPane.setConstraints(Poista, 1, i);
+                omistajaGrid.getChildren().addAll(nimi, Poista);
+
+            i = i + 1;
+
+        }
+        Button lisääNappi = new Button("Lisää tuote");
+        GridPane.setConstraints(lisääNappi, 0,i);
+        lisääNappi.setOnAction(e -> {
+            Lisäys.lisääTuote();
+            omistajaGrid.getChildren().clear();
+
+            int k = 0;
+            for (Tuote a : kahvila.getTuote()) {
+                System.out.println(a.getNimi());
+                //tuotteen nimi ja hinta
+
+                Label nimi = new Label();
+                nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
+                GridPane.setConstraints(nimi, 0,k);
+
+                Button Poista = new Button("Poista");
+                GridPane.setConstraints(Poista, 1, k);
+                omistajaGrid.getChildren().addAll(nimi, Poista);
+
+                k = k + 1;
+
+            }
+
+            GridPane.setConstraints(lisääNappi, 0,k);
+            omistajaGrid.getChildren().add(lisääNappi);
+
+
+
         });
-        //siakas scene
+        omistajaGrid.getChildren().add(lisääNappi);
+        omistajaGrid.setAlignment(Pos.CENTER);
+        omistus = new Scene(omistajaGrid, 350,350);
+        //asiakas scene
+        Button close2 = new Button("sulje");
+        close2.setOnAction(e -> {
+            stage.setScene(login);
+            nimiInput.clear();
+            salaInput.clear();
+            virhe.setText("");
+
+        });
         Label teksti = new Label("Olet kirjautunut asiakkaana");
         VBox layout2 = new VBox(10);
         layout2.getChildren().addAll(teksti, close2);
         asiakas = new Scene(layout2, 350,350);
         VBox layout = new VBox();
         layout2.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(text, close);
-        layout.setAlignment(Pos.CENTER);
-        omistus = new Scene(layout, 350,350);
+
+
         stage.setScene(login);
         stage.show();
 
