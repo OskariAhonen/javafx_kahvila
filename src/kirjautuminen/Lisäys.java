@@ -11,8 +11,12 @@ import javafx.stage.Stage;
 import java.util.*;
 import java.util.List;
 public class Lisäys {
+
+    private static Kahvila kahvila;
+    public Lisäys(Kahvila kahvila){
+        this.kahvila = kahvila;
+    }
     public static void lisääTuote() {
-        Kahvila kahvila = new Kahvila();
         Stage stage = new Stage();
         stage.setTitle("Lisää tuote");
         GridPane grid = new GridPane();
@@ -33,9 +37,9 @@ public class Lisäys {
 
 
             String i = hintaInput.getText();
-            int y = Integer.parseInt(i);
+            int hinta = Integer.parseInt(i);
             String nimi = nimiInput.getText();
-            Tuote a = new Tuote(i, y);
+            Tuote a = new Tuote(nimi, hinta);
             kahvila.lisaaTuote(a);
             stage.close();
 

@@ -23,6 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Kahvila kahvila = new Kahvila();
+        Lisäys lisäys = new Lisäys(kahvila);
         stage.setTitle("kirjautuminen");
         GridPane grid = new GridPane();
         grid.setHgap(8);
@@ -87,11 +88,10 @@ public class Main extends Application {
         GridPane.setConstraints(lisääNappi, 0,i);
         lisääNappi.setOnAction(e -> {
             Lisäys.lisääTuote();
-            omistajaGrid.getChildren().clear();
-
             int k = 0;
+            omistajaGrid.getChildren().clear();
             for (Tuote a : kahvila.getTuote()) {
-                System.out.println(a.getNimi());
+                ;
                 //tuotteen nimi ja hinta
 
                 Label nimi = new Label();
@@ -108,9 +108,6 @@ public class Main extends Application {
 
             GridPane.setConstraints(lisääNappi, 0,k);
             omistajaGrid.getChildren().add(lisääNappi);
-
-
-
         });
         omistajaGrid.getChildren().add(lisääNappi);
         omistajaGrid.setAlignment(Pos.CENTER);
@@ -135,5 +132,5 @@ public class Main extends Application {
         stage.setScene(login);
         stage.show();
 
-}
-}
+}}
+
