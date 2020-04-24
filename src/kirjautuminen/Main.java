@@ -150,5 +150,32 @@ public class Main extends Application {
         stage.setScene(login);
         stage.show();
 
-}}
+}
+    public void paivita(){
+        int k = 0;
+        omistajaGrid.getChildren().clear();
+        for (Tuote a : kahvila.getTuote()) {
+            ;
+            //tuotteen nimi ja hinta
+
+            Label nimi = new Label();
+            nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
+            GridPane.setConstraints(nimi, 0,k);
+
+            Button poistaNappi = new Button("Poista");
+            poistaNappi.setOnAction(ee -> {
+                kahvila.poistaTuote(a.getNimi());
+                omistajaGrid.getChildren().removeAll(nimi, poistaNappi);
+            });
+            GridPane.setConstraints(poistaNappi, 1, k);
+            omistajaGrid.getChildren().addAll(nimi, poistaNappi);
+
+            k = k + 1;
+
+        }
+
+        GridPane.setConstraints(lisääNappi, 0,k);
+        omistajaGrid.getChildren().add(lisääNappi);
+    }
+}
 
