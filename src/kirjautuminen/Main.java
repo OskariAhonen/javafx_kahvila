@@ -16,6 +16,16 @@ import javafx.stage.Stage;
 import java.util.List;
 public class Main extends Application {
     Scene login, omistus, asiakas;
+    private Button lisääNappi;
+    private Button poistaNappi;
+    private GridPane omistusGrid;
+    private TextField nimiInput;
+    private Label salaLabel;
+    private PasswordField salaInput;
+    private Label virhe;
+    private Label nimi;
+    private Label teksti;
+    private VBox layout2;
     public static void main(String [] args) {
         launch(args);
     }
@@ -77,9 +87,13 @@ public class Main extends Application {
                 nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
                 GridPane.setConstraints(nimi, 0,i);
 
-                Button Poista = new Button("Poista");
-                GridPane.setConstraints(Poista, 1, i);
-                omistajaGrid.getChildren().addAll(nimi, Poista);
+                Button poistaNappi = new Button("Poista");
+            poistaNappi.setOnAction(ee -> {
+                kahvila.poistaTuote(a.getNimi());
+                omistajaGrid.getChildren().removeAll(nimi, poistaNappi);
+            });
+                GridPane.setConstraints(poistaNappi, 1, i);
+                omistajaGrid.getChildren().addAll(nimi, poistaNappi);
 
             i = i + 1;
 
@@ -98,9 +112,13 @@ public class Main extends Application {
                 nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
                 GridPane.setConstraints(nimi, 0,k);
 
-                Button Poista = new Button("Poista");
-                GridPane.setConstraints(Poista, 1, k);
-                omistajaGrid.getChildren().addAll(nimi, Poista);
+                Button poistaNappi = new Button("Poista");
+                poistaNappi.setOnAction(ee -> {
+                    kahvila.poistaTuote(a.getNimi());
+                    omistajaGrid.getChildren().removeAll(nimi, poistaNappi);
+                });
+                GridPane.setConstraints(poistaNappi, 1, k);
+                omistajaGrid.getChildren().addAll(nimi, poistaNappi);
 
                 k = k + 1;
 
