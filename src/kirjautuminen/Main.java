@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.List;
 public class Main extends Application {
+    Kahvila kahvila = new Kahvila();
     Scene login, omistus, asiakas;
     private Button lisääNappi;
     private Button poistaNappi;
@@ -32,7 +33,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Kahvila kahvila = new Kahvila();
         Lisäys lisäys = new Lisäys(kahvila);
         stage.setTitle("kirjautuminen");
         GridPane grid = new GridPane();
@@ -78,54 +78,11 @@ public class Main extends Application {
         omistajaGrid.setPadding(new Insets(10,10,10,10));
         omistajaGrid.setHgap(10);
         omistajaGrid.setVgap(8);
-        int i = 0;
-        for (Tuote a : kahvila.getTuote()) {
-            ;
-                //tuotteen nimi ja hinta
-
-                Label nimi = new Label();
-                nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
-                GridPane.setConstraints(nimi, 0,i);
-
-                Button poistaNappi = new Button("Poista");
-            poistaNappi.setOnAction(ee -> {
-                kahvila.poistaTuote(a.getNimi());
-                omistajaGrid.getChildren().removeAll(nimi, poistaNappi);
-            });
-                GridPane.setConstraints(poistaNappi, 1, i);
-                omistajaGrid.getChildren().addAll(nimi, poistaNappi);
-
-            i = i + 1;
-
-        }
+        paivita(kahvila, omistajaGrid, lisääNappi);
         Button lisääNappi = new Button("Lisää tuote");
-        GridPane.setConstraints(lisääNappi, 0,i);
         lisääNappi.setOnAction(e -> {
             Lisäys.lisääTuote();
-            int k = 0;
-            omistajaGrid.getChildren().clear();
-            for (Tuote a : kahvila.getTuote()) {
-                ;
-                //tuotteen nimi ja hinta
-
-                Label nimi = new Label();
-                nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
-                GridPane.setConstraints(nimi, 0,k);
-
-                Button poistaNappi = new Button("Poista");
-                poistaNappi.setOnAction(ee -> {
-                    kahvila.poistaTuote(a.getNimi());
-                    omistajaGrid.getChildren().removeAll(nimi, poistaNappi);
-                });
-                GridPane.setConstraints(poistaNappi, 1, k);
-                omistajaGrid.getChildren().addAll(nimi, poistaNappi);
-
-                k = k + 1;
-
-            }
-
-            GridPane.setConstraints(lisääNappi, 0,k);
-            omistajaGrid.getChildren().add(lisääNappi);
+            paivita(kahvila, omistajaGrid, lisääNappi);
         });
         omistajaGrid.getChildren().add(lisääNappi);
         omistajaGrid.setAlignment(Pos.CENTER);
@@ -151,7 +108,7 @@ public class Main extends Application {
         stage.show();
 
 }
-    public void paivita(){
+    public void paivita(Kahvila kahvila, GridPane omistajaGrid, Button lisääNappi){
         int k = 0;
         omistajaGrid.getChildren().clear();
         for (Tuote a : kahvila.getTuote()) {
