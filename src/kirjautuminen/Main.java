@@ -19,7 +19,7 @@ public class Main extends Application {
     Scene login, omistus, asiakas;
     private Button lisääNappi;
     private Button poistaNappi;
-    private GridPane omistusGrid;
+    private GridPane omistajaGrid;
     private TextField nimiInput;
     private Label salaLabel;
     private PasswordField salaInput;
@@ -27,12 +27,14 @@ public class Main extends Application {
     private Label nimi;
     private Label teksti;
     private VBox layout2;
+    private int k;
     public static void main(String [] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
         Lisäys lisäys = new Lisäys(kahvila);
         stage.setTitle("kirjautuminen");
         GridPane grid = new GridPane();
@@ -59,12 +61,12 @@ public class Main extends Application {
         GridPane.setConstraints(virhe, 2,0);
         button.setOnAction(e -> {
             if (nimiInput.getText().equals("Moi") && salaInput.getText().equals("Taitaa")){
-                stage.setScene(omistus);
+            Scene omistajaNakyma = new Scene(Omistaja.);
 
 
             }
             else if (nimiInput.getText().equals("Asiakas") && salaInput.getText().equals("kahvi")) {
-               stage.setScene(asiakas);
+
             } else {
                 virhe.setText("Väärä tunnus tai salasana");
             }
@@ -73,66 +75,14 @@ public class Main extends Application {
         grid.setAlignment(Pos.CENTER);
         grid.getChildren().addAll(nimiLabel, nimiInput, salaLabel, salaInput, button, virhe);
         login = new Scene(grid, 350, 350);
-        // omistja
-        GridPane omistajaGrid = new GridPane();
-        omistajaGrid.setPadding(new Insets(10,10,10,10));
-        omistajaGrid.setHgap(10);
-        omistajaGrid.setVgap(8);
-        paivita(kahvila, omistajaGrid, lisääNappi);
-        Button lisääNappi = new Button("Lisää tuote");
-        lisääNappi.setOnAction(e -> {
-            Lisäys.lisääTuote();
-            paivita(kahvila, omistajaGrid, lisääNappi);
-        });
-        omistajaGrid.getChildren().add(lisääNappi);
-        omistajaGrid.setAlignment(Pos.CENTER);
-        omistus = new Scene(omistajaGrid, 350,350);
-        //asiakas scene
-        Button close2 = new Button("sulje");
-        close2.setOnAction(e -> {
-            stage.setScene(login);
-            nimiInput.clear();
-            salaInput.clear();
-            virhe.setText("");
 
-        });
-        Label teksti = new Label("Olet kirjautunut asiakkaana");
-        VBox layout2 = new VBox(10);
-        layout2.getChildren().addAll(teksti, close2);
-        asiakas = new Scene(layout2, 350,350);
-        VBox layout = new VBox();
-        layout2.setAlignment(Pos.CENTER);
+
 
 
         stage.setScene(login);
         stage.show();
 
 }
-    public void paivita(Kahvila kahvila, GridPane omistajaGrid, Button lisääNappi){
-        int k = 0;
-        omistajaGrid.getChildren().clear();
-        for (Tuote a : kahvila.getTuote()) {
-            ;
-            //tuotteen nimi ja hinta
 
-            Label nimi = new Label();
-            nimi.setText(a.getNimi() + ", " + a.getHinta() + "€");
-            GridPane.setConstraints(nimi, 0,k);
-
-            Button poistaNappi = new Button("Poista");
-            poistaNappi.setOnAction(ee -> {
-                kahvila.poistaTuote(a.getNimi());
-                omistajaGrid.getChildren().removeAll(nimi, poistaNappi);
-            });
-            GridPane.setConstraints(poistaNappi, 1, k);
-            omistajaGrid.getChildren().addAll(nimi, poistaNappi);
-
-            k = k + 1;
-
-        }
-
-        GridPane.setConstraints(lisääNappi, 0,k);
-        omistajaGrid.getChildren().add(lisääNappi);
-    }
 }
 
