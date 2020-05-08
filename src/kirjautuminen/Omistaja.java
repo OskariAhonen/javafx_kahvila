@@ -15,7 +15,7 @@ public class Omistaja {
 public Omistaja(Kahvila kahvila) {
     this.layout = new GridPane();
     this.kahvila = kahvila;
-    this.lisaaNappi = new Button();
+    this.lisaaNappi = new Button("Lisää tuote");
 }
 public Parent nakyma (Stage stage) {
     layout.setPadding(new Insets(10,10,10,10));
