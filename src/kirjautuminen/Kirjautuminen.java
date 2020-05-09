@@ -66,7 +66,7 @@ public class Kirjautuminen {
             Scene asiakasNakyma = new Scene(asiakas.nakyma(stage));
             paaNakyma.setCenter(asiakasNakyma.getRoot());
             } else {
-                virhe.setText("Väärä tunnus tai salasana");
+                virhe.setText("Väärä tunnus tai salasana!");
             }
         });
         GridPane.setConstraints(button, 4,1);
