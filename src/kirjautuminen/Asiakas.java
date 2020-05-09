@@ -1,74 +1,68 @@
-
-// Asiakkaan tiedot kuten rahat ja bonuspisteet
 package kirjautuminen;
 
-import java.util.Scanner;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+import java.sql.SQLOutput;
 
 public class Asiakas {
-    private int raha;
-    private int bonus;
-
-    public Asiakas() {
-        this.raha = 100;
-        this.bonus = 0;
+    private Kahvila kahvila;
+    private BorderPane PaaNakyma;
+    private GridPane layout;
+    private int saldo;
+    private Label saldoLabel;
+    private Label NimiLabel;
+    private Button ostaNappi;
+    public Asiakas(Kahvila kahvila) {
+        this.kahvila = kahvila;
+        this.PaaNakyma = new BorderPane();
+        this.layout = new GridPane();
+        this.saldo = 10;
+        this.saldoLabel = new Label();
+        saldoLabel.setText("Saldo: " + saldo + "€");
+        this.ostaNappi = new Button("Osta");
     }
-
-    public int tulostaRaha() {
-        return this.raha;
+    public Parent nakyma(Stage stage) {
+        layout.setPadding(new Insets(10,10,10,10));
+        layout.setVgap(10);
+        layout.setVgap(8);
+        layout.setAlignment(Pos.CENTER);
+        PaaNakyma.setPadding(new Insets(20, 0, 0, 20));
+        PaaNakyma.setCenter(layout);
+        PaaNakyma.setTop(saldoLabel);
+        paivita(kahvila, layout, ostaNappi);
+        ostaNappi.setOnAction(e -> {
+            paivita(kahvila, layout, ostaNappi);
+        });
+        return this.PaaNakyma;
     }
-    public int getBonus() {
-        return this.bonus;
-    }
-    public void otaRaha(String tuote, int maksu) {
-       while (true) {
-        Scanner ok = new Scanner(System.in);
-        if (bonus < 10) {
-            System.out.print("Oletko varma että haluat ostaa tuotteen " + tuote + " (k/e): ");
-            String vahvistus = ok.nextLine();
+    public void paivita(Kahvila kahvila, GridPane Grid, Button nappi) {
+        int k = 0;
+        Grid.getChildren().clear();
+        for (Tuote a : kahvila.getTuote()) {
+            NimiLabel = new Label();
+            NimiLabel.setText(a.getNimi() + ", " + a.getHinta() + "€");
+            ostaNappi = new Button("Osta");
+            ostaNappi.setOnAction(e -> {
+                if (saldo < a.getHinta()) {
 
-            if (vahvistus.equals("k")) {
-                if (raha < maksu) {
-                    System.out.println("Tuotetta ei voi ostaa, liian vähän rahaa");
-                    break;
                 } else {
-                    this.raha = raha - maksu;
-                    System.out.println("tuote ostetiin.");
-                    this.bonus = this.bonus + 1;
-                    break;
-                }
-            } else if (vahvistus.equals("e")) {
-                System.out.println("Tuotetta ei osteta");
-                break;
-            } else {
-                System.out.println("Anna kelvollinen vastaus");
-            }
-        } else if (bonus == 10) {
-            System.out.print("Haluatko käyttää 10 bonuspistettä saadaksesi tuotteen ilmaiseksi (k/e): ");
-            String b = ok.nextLine();
-            if (b.equals("k")) {
-                System.out.println("Tuote ostetiin!");
-                bonus = bonus - 10;
-                break;
-            } else if (b.equals("e")) {
-                System.out.print("Oletko varma että haluat ostaa tuotteen rahoillasi (k/e): " + tuote + ": ");
-                String vahvistus = ok.nextLine();
-                if (vahvistus.equals("k")) {
-                    if (raha < maksu) {
-                        System.out.println("Tuotetta ei voi ostaa, liian vähän rahaa");
-                        break;
-                    } else {
-                        raha = raha - maksu;
-                        System.out.println("Tuote ostettiin!");
-                        break;
-                    }
+                    saldo = saldo - a.getHinta();
+                    saldoLabel.setText("Saldo: " + saldo + "€");
                 }
 
-
-            }
+            });
+            GridPane.setConstraints(NimiLabel, 0,k);
+            GridPane.setConstraints(ostaNappi, 1,k);
+            Grid.getChildren().addAll(NimiLabel, ostaNappi);
+            k++;
         }
+        GridPane.setConstraints(nappi, 0, k);
     }
-    }
-
-
-
 }

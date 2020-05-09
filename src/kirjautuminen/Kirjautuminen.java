@@ -18,7 +18,7 @@ public class Kirjautuminen {
     private BorderPane paaNakyma;
     private Kahvila kahvila;
     private Omistaja omistaja;
-    private Asikaat asiakas;
+    private Asiakas asiakas;
     private GridPane layoyt;
 
     public Kirjautuminen(Kahvila kahvila) {
@@ -29,7 +29,7 @@ public class Kirjautuminen {
     }
     public Parent nakyma(Stage stage) {
         Omistaja omistaja = new Omistaja(kahvila);
-        Asikaat asiakas = new Asikaat(kahvila);
+        Asiakas asiakas = new Asiakas(kahvila);
         Lisäys lisäys = new Lisäys(kahvila);
         stage.setTitle("kirjautuminen");
         GridPane grid = new GridPane();
