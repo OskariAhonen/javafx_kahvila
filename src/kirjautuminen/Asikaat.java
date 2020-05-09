@@ -9,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.sql.SQLOutput;
+
 public class Asikaat {
     private Kahvila kahvila;
     private BorderPane PaaNakyma;
@@ -47,6 +49,7 @@ public class Asikaat {
             GridPane.setConstraints(ostaNappi, 1,k);
             AsiakasGrid.getChildren().addAll(NimiLabel, ostaNappi);
             k++;
+            System.out.println("moi");
         }
     }
     }
