@@ -25,31 +25,44 @@ public class Asikaat {
         this.layout = new GridPane();
         this.saldo = 10;
         this.saldoLabel = new Label();
-        saldoLabel.setText("Saldo:" + saldo + "€");
+        saldoLabel.setText("Saldo: " + saldo + "€");
         this.ostaNappi = new Button("Osta");
     }
     public Parent nakyma(Stage stage) {
         layout.setPadding(new Insets(10,10,10,10));
-        layout.setVgap(8);
         layout.setVgap(10);
-        layout.setPrefSize(500,450);
+        layout.setVgap(8);
         layout.setAlignment(Pos.CENTER);
+        PaaNakyma.setPadding(new Insets(20, 0, 0, 20));
         PaaNakyma.setCenter(layout);
         PaaNakyma.setTop(saldoLabel);
         paivita(kahvila, layout, ostaNappi);
-        return PaaNakyma;
+        ostaNappi.setOnAction(e -> {
+            paivita(kahvila, layout, ostaNappi);
+        });
+        return this.PaaNakyma;
     }
-    public void paivita(Kahvila kahvila, GridPane AsiakasGrid, Button nappi) {
+    public void paivita(Kahvila kahvila, GridPane Grid, Button nappi) {
         int k = 0;
-        AsiakasGrid.getChildren().clear();
+        Grid.getChildren().clear();
         for (Tuote a : kahvila.getTuote()) {
             NimiLabel = new Label();
-            NimiLabel.setText(a.getNimi() + ", " + a.getHinta());
+            NimiLabel.setText(a.getNimi() + ", " + a.getHinta() + "€");
+            ostaNappi = new Button("Osta");
+            ostaNappi.setOnAction(e -> {
+                if (saldo < a.getHinta()) {
+
+                } else {
+                    saldo = saldo - a.getHinta();
+                    saldoLabel.setText("Saldo: " + saldo + "€");
+                }
+
+            });
             GridPane.setConstraints(NimiLabel, 0,k);
             GridPane.setConstraints(ostaNappi, 1,k);
-            AsiakasGrid.getChildren().addAll(NimiLabel, ostaNappi);
+            Grid.getChildren().addAll(NimiLabel, ostaNappi);
             k++;
-            System.out.println("moi");
         }
+        GridPane.setConstraints(nappi, 0, k);
     }
     }
