@@ -23,16 +23,15 @@ public Parent nakyma (Stage stage) {
     layout.setVgap(10);
     layout.setAlignment(Pos.CENTER);
     paivita(kahvila, layout, lisaaNappi);
-    layout.getChildren().add(lisaaNappi);
     lisaaNappi.setOnAction(e -> {
         Lisäys.lisääTuote();
         paivita(kahvila, layout, lisaaNappi);
-        layout.getChildren().add(lisaaNappi);
 
     });
     return this.layout;
 }
-    public void paivita(Kahvila kahvila, GridPane omistajaGrid, Button lisääNappi){
+    public void paivita(Kahvila kahvila, GridPane omistajaGrid, Button lisaaNappi){
+    omistajaGrid.getChildren().clear();
         int k = 0;
         for (Tuote a : kahvila.getTuote()) {
             ;
@@ -54,6 +53,7 @@ public Parent nakyma (Stage stage) {
 
         }
 
-        GridPane.setConstraints(lisääNappi, 0, k);
+        GridPane.setConstraints(lisaaNappi, 0, k);
+        layout.getChildren().add(lisaaNappi);
     }
 }

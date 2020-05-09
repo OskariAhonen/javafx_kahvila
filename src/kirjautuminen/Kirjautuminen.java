@@ -29,6 +29,7 @@ public class Kirjautuminen {
     }
     public Parent nakyma(Stage stage) {
         Omistaja omistaja = new Omistaja(kahvila);
+        Asikaat asiakas = new Asikaat(kahvila);
         Lisäys lisäys = new Lisäys(kahvila);
         stage.setTitle("kirjautuminen");
         GridPane grid = new GridPane();
@@ -61,8 +62,9 @@ public class Kirjautuminen {
                 paaNakyma.setCenter(omistajaNakyma.getRoot());
 
             }
-            else if (nimiInput.getText().equals("Asiakas") && salaInput.getText().equals("kahvi")) {
-
+            else if (nimiInput.getText().equals("") && salaInput.getText().equals("")) { //testaus vaiheessa ei mitään
+            Scene asiakasNakyma = new Scene(asiakas.nakyma(stage));
+            paaNakyma.setCenter(asiakasNakyma.getRoot());
             } else {
                 virhe.setText("Väärä tunnus tai salasana");
             }
