@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+
 public class Kirjautuminen {
     private BorderPane paaNakyma;
     private Kahvila kahvila;
@@ -62,7 +64,7 @@ public class Kirjautuminen {
                 paaNakyma.setCenter(omistajaNakyma.getRoot());
 
             }
-            else if (nimiInput.getText().equals("") && salaInput.getText().equals("")) { //testaus vaiheessa ei mitään
+            else if (nimiInput.getText().equals("Asiakas") && salaInput.getText().equals("Kahvi")) { //testaus vaiheessa ei mitään
             Scene asiakasNakyma = new Scene(asiakas.nakyma(stage));
             paaNakyma.setCenter(asiakasNakyma.getRoot());
             } else {

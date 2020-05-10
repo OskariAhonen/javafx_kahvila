@@ -3,13 +3,17 @@ package kirjautuminen;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Type;
 import java.sql.SQLOutput;
+import java.util.Optional;
 
 public class Asiakas {
     private Kahvila kahvila;
@@ -19,16 +23,19 @@ public class Asiakas {
     private Label saldoLabel;
     private Label NimiLabel;
     private Button ostaNappi;
+    private Omistaja omistaja;
     public Asiakas(Kahvila kahvila) {
         this.kahvila = kahvila;
+        this.omistaja = new Omistaja(kahvila);
         this.PaaNakyma = new BorderPane();
         this.layout = new GridPane();
-        this.saldo = 10;
         this.saldoLabel = new Label();
+        this.saldo = 20;
         saldoLabel.setText("Saldo: " + saldo + "€");
         this.ostaNappi = new Button("Osta");
     }
     public Parent nakyma(Stage stage) {
+        stage.setTitle("Asiakas");
         layout.setPadding(new Insets(10,10,10,10));
         layout.setVgap(10);
         layout.setVgap(8);
@@ -50,13 +57,22 @@ public class Asiakas {
             NimiLabel.setText(a.getNimi() + ", " + a.getHinta() + "€");
             ostaNappi = new Button("Osta");
             ostaNappi.setOnAction(e -> {
-                if (saldo < a.getHinta()) {
+                Alert vahvistus = new Alert(Alert.AlertType.CONFIRMATION);
+                vahvistus.setHeaderText("Tarvitaan vahvistus");
+                vahvistus.setContentText("Oletko varma että haluat ostaa tuotteen: " + a.getNimi() + "?");
+                Optional<ButtonType> result = vahvistus.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    if (saldo < a.getHinta()) {
+                        Alert maksuVirhe = new Alert(Alert.AlertType.ERROR);
+                        maksuVirhe.setHeaderText("Maksu virhe");
+                        maksuVirhe.setContentText("Saldosi ei riitä tuotteeseen: " + a.getNimi() + ", " + "Saldo: " + saldo);
+                        maksuVirhe.showAndWait();
+                    } else {
+                        saldo = saldo - a.getHinta();
+                        saldoLabel.setText("Saldo:" + saldo);
 
-                } else {
-                    saldo = saldo - a.getHinta();
-                    saldoLabel.setText("Saldo: " + saldo + "€");
+                    }
                 }
-
             });
             GridPane.setConstraints(NimiLabel, 0,k);
             GridPane.setConstraints(ostaNappi, 1,k);

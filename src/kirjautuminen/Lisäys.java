@@ -28,7 +28,7 @@ public class Lisäys {
         GridPane.setConstraints(lisäNimi, 0,0);
         TextField nimiInput = new TextField();
         GridPane.setConstraints(nimiInput, 1,0);
-        Label lisäHinta = new Label("Anna hinta: ");
+        Label lisäHinta = new Label("Anna hinta (€): ");
         GridPane.setConstraints(lisäHinta, 0,1);
         TextField hintaInput = new TextField();
         GridPane.setConstraints(hintaInput, 1,1);
