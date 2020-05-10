@@ -29,7 +29,7 @@ public class Main extends Application {
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Toiminnot");
         MenuItem profiilinVaihto = new MenuItem("Vaihda profiili");
-        MenuItem sammuta = new MenuItem("Samutta");
+        MenuItem sammuta = new MenuItem("Sammuta");
         menu.getItems().addAll(profiilinVaihto, sammuta);
         menuBar.getMenus().add(menu);
 
