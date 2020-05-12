@@ -58,18 +58,20 @@ public class Asiakas {
             ostaNappi = new Button("Osta");
             ostaNappi.setOnAction(e -> {
                 Alert vahvistus = new Alert(Alert.AlertType.CONFIRMATION);
-                vahvistus.setHeaderText("Tarvitaan vahvistus");
+                vahvistus.setTitle("Vahvistus vaaditaan");
+                vahvistus.setHeaderText("Vahvistus vaaditaan");
                 vahvistus.setContentText("Oletko varma että haluat ostaa tuotteen: " + a.getNimi() + "?");
                 Optional<ButtonType> result = vahvistus.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     if (saldo < a.getHinta()) {
                         Alert maksuVirhe = new Alert(Alert.AlertType.ERROR);
                         maksuVirhe.setHeaderText("Maksu virhe");
-                        maksuVirhe.setContentText("Saldosi ei riitä tuotteeseen: " + a.getNimi() + ", " + "Saldo: " + saldo);
+                        maksuVirhe.setContentText("Saldosi ei riitä tuotteeseen: " + a.getNimi() + ", " + "Saldo: " + saldo + "€");
+                        maksuVirhe.setTitle("Saldosi ei riitä");
                         maksuVirhe.showAndWait();
                     } else {
                         saldo = saldo - a.getHinta();
-                        saldoLabel.setText("Saldo:" + saldo);
+                        saldoLabel.setText("Saldo: " + saldo + "€");
 
                     }
                 }

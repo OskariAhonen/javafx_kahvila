@@ -59,7 +59,7 @@ public class Kirjautuminen {
 
         paaNakyma.setCenter(grid);
         button.setOnAction(e -> {
-            if (nimiInput.getText().equals("Moi") && salaInput.getText().equals("Taitaa")){
+            if (nimiInput.getText().equals("Omistaja") && salaInput.getText().equals("Taitaa")){
                 Scene omistajaNakyma = new Scene(omistaja.nakyma(stage));
                 paaNakyma.setCenter(omistajaNakyma.getRoot());
 

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.util.*;
 import java.util.List;
@@ -23,6 +24,7 @@ public class Lisäys {
         grid.setPadding(new Insets(10,10,10,10));
         grid.setVgap(8);
         grid.setHgap(10);
+        stage.initModality(Modality.APPLICATION_MODAL);
 
         Label lisäNimi = new Label("Anna tuotteen nimi: ");
         GridPane.setConstraints(lisäNimi, 0,0);

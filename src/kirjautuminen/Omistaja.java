@@ -58,6 +58,7 @@ public Parent nakyma (Stage stage) {
                 Alert vahvistus = new Alert(Alert.AlertType.CONFIRMATION);
                 vahvistus.setHeaderText("Vahvistus vaaditaan");
                 vahvistus.setContentText("Oletko varma että haluat poistaa tuotteen " + a.getNimi());
+                vahvistus.setTitle("Oletko varma että haluat poistaa tuotteen?");
                 Optional<ButtonType> result = vahvistus.showAndWait();
                 if (result.get() == ButtonType.OK){
                     kahvila.poistaTuote(a.getNimi());
